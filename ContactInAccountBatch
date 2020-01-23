@@ -1,0 +1,18 @@
+global class ContactInAccountBatch implements Database.Batchable<sObject>, Database.Stateful {
+        
+        
+        global Database.QueryLocator start(Database.BatchableContext bc){
+            return Database.getQueryLocator('SELECT id FROM  Account');
+         
+        }
+        
+        
+        global void execute(Database.BatchableContext bc, List<SObject> scope){
+            ContactInAccountHandlerTest.countMethod((List<Contact>)scope);
+        }
+        
+        
+        global void finish(Database.BatchableContext bc){
+            System.debug('Process finished');
+        }    
+    }
