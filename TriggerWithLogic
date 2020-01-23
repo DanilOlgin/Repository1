@@ -1,0 +1,26 @@
+trigger countTotalContactInAccount on Contact (after insert, after update) {
+    
+    set<id> accId =new set<id>();
+    List<Account> accountToUpdate = new List<Account>();
+    
+    if(Trigger.isInsert){
+        for(Contact c:trigger.new){
+            accId.add(c.accountID);
+        }
+    }
+
+    if(Trigger.isUpdate){
+        for(Contact c:trigger.old){
+            accId.add(c.accountID);
+        }
+    }
+    
+    
+    Map<Id,Account> accountMap =new Map<Id,Account>([select id from  Account where Id IN: accId ]);
+    
+       for(Account acc: accountMap.values()){
+           accountMap.get(acc.id).Number_of_Contact__c = acc.Contacts.size();
+           accountToUpdate.add(accountMap.get(acc.id));
+       }
+       update accountToUpdate;
+}
