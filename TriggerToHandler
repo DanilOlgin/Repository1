@@ -1,0 +1,3 @@
+trigger TotalContactInAccTrigger on Contact (before insert, before update) {
+    ContactInAccountHandlerTest.countMethod(newContactList);
+}
