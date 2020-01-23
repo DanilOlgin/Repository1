@@ -1,0 +1,17 @@
+public class ContactInAccountHandlerTest {
+    
+    public static void countMethod(List<Contact> newContactList){    
+        set<id> accId = new set<id>();
+        
+        for(Contact c: newContactList){
+            accId.add(c.accountID); 
+        }
+        
+        Map<Id, Account> accountMap = new Map<Id,Account>([SELECT id FROM  Account WHERE Id IN: accId ]);
+        
+        for(Account acc: accountMap.values()){
+            accountMap.get(acc.id).Number_of_Contact__c = acc.Contacts.size();
+        }
+        update accountMap.values();
+    }
+}
